@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MoonlettaJS</title>
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Inconsolata:400,700"/>
+  <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/mutable-tools/MutaGrid/master/demo/mutagrid/dist/12/mutagrid.min.css"/>
+  <style>
+
+    html,
+    body {
+      height: 100%;
+      box-sizing: border-box; 
+    }
+    html {
+      overflow-x: hidden;
+    }
+    body {
+      background: #000;
+      color: #ddd;
+      font-size: 18px;
+    }
+    body,
+    pre,
+    code,
+    input {
+      font-family: 'Inconsolata', monospace;
+    }
+    h1,
+    h2,
+    pre,
+    code,
+    input {
+      color: #fff;
+      font-weight: normal;
+    }
+    input {
+      background-color: rgba(255,255,255,.15);
+      border: 1px solid #fff;
+      font-size: 2em;
+      padding: .3em .8em;
+    }
+    a {
+      color: #e74c3c;
+    }
+    .text-center {
+      text-align: center;
+    }
+    main {
+      padding: 5em 1.5em;
+    }
+    .row {
+      margin: 2em 0;
+    }
+    h1 {
+      font-size: 2em;
+    }
+    h2 {
+      font-size: 1.6em;
+    }
+    hr {
+      opacity: .2;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div id="app" class="container">
+
+    <div class="moonletta-head row">
+      <div class="column-8 column-center text-center">
+        <h1>Moonletta</h1>
+        <h2>Calcula tu boleta de honorarios</h2>
+        <p>Librería: <a href="http://moonjs.ga/">MoonJS</a></p>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="moonletta-body row">
+      <div class="column-8 column-center text-center">
+        <input type="number" m-model="value" m-on:change="calcula" placeholder="$" autofocus="true" min="0" step="5">
+      </div>
+    </div>
+
+    <div class="moonletta-result row">
+      <div class="column-4 column-push-2 text-center">
+        <h2>Líquido</h2>
+          Si lo pactado fue en valor líquido, deberás hacer la boleta por <b>${{net}}</b> y recibirás <b>${{value}}</b> en efectivo.
+      </div>
+      <div class="column-4 column-offset-2 text-center">
+          <h2>Bruto</h2>
+          Si lo pactado fue en valor bruto, deberás hacer la boleta por <b>${{value}}</b> y recibirás <b>${{gross}}</b> en efectivo.
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    
+    <div class="moonletta-footer row">
+      <div class="column-8 column-center text-center">
+        <p>©2017 <a href="http://www.github.com/juanbrujo">Jorge Epuñan para <a href="http://www.beerjs.cl/">BeerJS Santiago</a> - <a href="http://www.github.com/juanbrujo">Abril 2017</a>.</p>
+      </a>
+    </div>
+
+  </div>
+
+  <script src="http://moonjs.ga/dist/moon.js"></script>
+  <script src="https://cdn.rawgit.com/juanbrujo/numberToCLPFormater/912c8cf0/numberToCLPFormater.js"></script>
+  <script>
+    const number = numberToCLPFormater;
+
+    const app = new Moon({
+      el: "#app",
+      data: {
+        value: 0,
+        net: 0,
+        gross: 0,
+      },
+      methods: {
+        calcula() {
+          let value = this.get('value');
+          // net
+          const netFactor = 1.1111111111111112;
+          const net = this.get('net');
+          this.set('net', number(value * netFactor, false));
+          // gross
+          const grossFactor = 0.9;
+          const gross = this.get('gross');
+          this.set('gross', number(value * grossFactor, false));
+        },
+      },
+    });
+  </script>
+
+</body>
+</html>
