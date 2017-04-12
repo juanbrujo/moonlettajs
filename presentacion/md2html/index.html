@@ -1,0 +1,37 @@
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MD2HTML</title>
+    <link rel="stylesheet" href="//moonjs.ga/examples/markdown/styles.css">
+  </head>
+  <body>
+    <div id="app" m-mask>
+      <textarea m-on:input="update"># Hello Moon</textarea>
+      <div m-html="{{html}}"></div>
+    </div>
+    <script src="//moonjs.ga/dist/moon.js"></script>
+    <script src="//unpkg.com/marked@0.3.6/marked.min.js"></script>
+    <script>
+      var app = new Moon({
+        el: "#app",
+        data: {
+          input: "# Hello Moon",
+        },
+        methods: {
+          update: function(evt) {
+            this.set('input', evt.target.value);
+          }
+        },
+        computed: {
+          html: {
+            get: function() {
+              return marked(this.get('input'));
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
