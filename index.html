@@ -81,7 +81,7 @@
 
     <div class="moonletta-body row">
       <div class="column-8 column-center text-center">
-        <input type="number" m-model="value" m-on:change="calcula" placeholder="$" autofocus="true" min="0" step="5">
+        <input type="number" m-model="value" m-on:keydown="calcula" placeholder="$" autofocus="true" min="0" step="5">
       </div>
     </div>
 
@@ -114,9 +114,9 @@
     const app = new Moon({
       el: "#app",
       data: {
-        value: 0,
-        net: 0,
-        gross: 0,
+        value: '',
+        net: '',
+        gross: '',
       },
       methods: {
         calcula() {
